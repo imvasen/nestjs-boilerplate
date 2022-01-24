@@ -34,6 +34,23 @@ $ npm install
 
 ## Running the app
 
+A `.env` file can be created to set up some stuff like log level, databases, etc.
+
+```bash
+PORT=5000  # Default 3000
+LOG_LEVEL=debug  # Default info
+# Cache
+# If REDIS_HOST not set, it'll use local memory to cache stuff
+REDIS_HOST=localhost
+REDIS_PORT=6379
+
+POSTGRES_HOST=localhost
+POSTGRES_USER=your_user
+POSTGRES_PASSWORD=your_password
+POSTGRES_DB=your_db
+POSTGRES_PORT=5432
+```
+
 ```bash
 # development
 $ npm run start
