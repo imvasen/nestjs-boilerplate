@@ -1,5 +1,6 @@
 import * as redisStore from 'cache-manager-redis-store';
 import { CacheModuleOptions } from '@nestjs/common';
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 export enum LogLevel {
   error = 'error',
@@ -29,4 +30,25 @@ export const cache: CacheModuleOptions = {
         auth_pass: process.env.REDIS_PASSWORD,
       }
     : {}),
+};
+
+export const typeorm: TypeOrmModuleOptions = {
+  autoLoadEntities: true,
+  verboseRetryLog: true,
+  synchronize: true,
+  ...(process.env.POSTGRES_HOST
+    ? {
+        type: 'postgres',
+        host: process.env.POSTGRES_HOST,
+        username: process.env.POSTGRES_USER,
+        password: process.env.POSTGRES_PASSWORD,
+        database: process.env.POSTGRES_DB,
+        port: process.env.POSTGRES_PORT
+          ? parseInt(process.env.POSTGRES_PORT)
+          : 5432,
+      }
+    : {
+        type: 'sqlite',
+        database: process.env.SQLITE_DB ?? 'local.db',
+      }),
 };
